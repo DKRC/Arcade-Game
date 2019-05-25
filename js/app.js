@@ -5,23 +5,19 @@ class Enemy {
         this.speed = speed;
         this.sprite = 'images/enemy-bug.png';
     }
-
+    // update the velocity
     update (dt) {
 
         this.x += this.speed * dt;
     
         if (this.x > 550) {
             this.x = -100;
-            this.speed = 100 + Math.floor(Math.random() * 512);
+            this.speed = 100 + Math.floor(Math.random() * 550);
         }
-    
-        if (player.x < this.x + 60 &&
-            player.x + 37 > this.x &&
-            player.y < this.y + 25 &&
-            30 + player.y > this.y) {
+        // This statement verify the collision
+        if (player.x + 39 > this.x && player.x < this.x + 59 && player.y < this.y + 24 && 30 + player.y > this.y) {
             player.x = 200;
-            player.y = 300;
-            
+            player.y = 300;          
         }
     }
 
@@ -39,8 +35,13 @@ class Player {
         this.speed = speed;
         this.sprite = 'images/char-boy.png';
     }
-
+    // The statements below prevent the user to go beyond the board
     update () {
+
+        if (this.x < 0) {
+            this.x = 0;
+        }
+
         if (this.y > 380) {
             this.y = 380;
         }
@@ -48,11 +49,8 @@ class Player {
         if (this.x > 400) {
             this.x = 400;
         }
-    
-        if (this.x < 0) {
-            this.x = 0;
-        }
         
+        // this one checks if the player crossed the street. 
         if (this.y == -20) {
             if (!modalControl) {
                 modal();   
@@ -62,6 +60,7 @@ class Player {
     
     }
 
+    // this one resets the game
     reset () {
         this.x = 200;
         this.y = 300;   
@@ -72,19 +71,20 @@ class Player {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
-    handleInput (keyPress) {
-        switch (keyPress) {
-            case 'left':
-                this.x -= this.speed + 50;
-                break;
+    // Inspired by https://stackoverflow.com/questions/18051230/how-to-make-sure-only-one-key-is-pressed
+    handleInput (key) {
+        switch (key) {
             case 'up':
                 this.y -= this.speed + 30;
                 break;
-            case 'right':
-                this.x += this.speed + 50;
-                break;
             case 'down':
                 this.y += this.speed + 30;
+                break;
+            case 'left':
+                this.x -= this.speed + 50;
+                break;
+            case 'right':
+                this.x += this.speed + 50;
                 break;
         }
     }
@@ -95,14 +95,17 @@ let modalControl = false;
 
 let allEnemies = [];
 
+// this for loop creat all Enemies 
 let enemyStartPosition = 60
 for (let index = 0; index < 3; index++) {
-    allEnemies.push(new Enemy(-80, enemyStartPosition, (100 + Math.floor(Math.random() * 512))));
+    allEnemies.push(new Enemy(-80, enemyStartPosition, (100 + Math.floor(Math.random() * 550))));
     enemyStartPosition += 80;
 }
 
 const player = new Player(200, 300, 50);
 
+
+// This a modal object by Sweetalert2: https://sweetalert2.github.io/
 const modal = function () {
     modalControl = true
     Swal.fire({
