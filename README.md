@@ -9,7 +9,7 @@ This game is a student project develop by me as part of Front-End Development Na
 
 Your objective is to help Bob cross the street avoiding the bugs. For that, you must use your keyboard arrow keys.
 
-If one of the bugs crashs with Bob, the game start again. 
+If one of the bugs crashes with Bob, the game start again. 
 
 ## Credits
 
