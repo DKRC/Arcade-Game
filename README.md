@@ -1,7 +1,7 @@
 
 # Classic Arcade Game
 
-## About test
+## About
 
 This game is a student project develop by me as part of Front-End Development Nanodegree Program.
 
